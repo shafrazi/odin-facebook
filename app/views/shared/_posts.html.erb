@@ -1,0 +1,9 @@
+<% @posts.each do |post| %>
+  <ul class="posts">
+    <li>
+      <%= post.content %>
+      <%= link_to "Delete", post_path(post), method: :delete, class: "btn-sm btn-danger", id: "post-delete" if post.user == current_user %>
+    </li>
+    <hr>
+  </ul>
+<% end %>

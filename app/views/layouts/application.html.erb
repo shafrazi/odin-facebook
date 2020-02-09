@@ -5,65 +5,90 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'simple-sidebar', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <h5 class="my-0 mr-md-auto font-weight-bold">OdinBook</h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
-      </nav>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
       <% if user_signed_in? %>
-        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
-      <% else %>
-        <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-outline-primary" %>
-      <% end %>
-    </div>
-    <div class="container">
-      <% flash.each do |message_type, message| %>
-        <%= content_tag :div, message, class: "alert alert-#{message_type}" %>
-      <% end %>
-      <%= yield %>
-      <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-          <div class="col-12 col-md">
-            <img class="mb-2" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-            <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
+        <div class="bg-light border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading">OdinBook</div>
+          <div class="list-group list-group-flush">
+            <%= link_to 'Friends', "#", class: "list-group-item list-group-item-action bg-light" %>
+            <%= link_to 'Photos', '#', class: "list-group-item list-group-item-action bg-light" %>
+            <%= link_to 'Posts', user_posts_path, class: "list-group-item list-group-item-action bg-light" %>
           </div>
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Cool stuff</a></li>
-              <li><a class="text-muted" href="#">Random feature</a></li>
-              <li><a class="text-muted" href="#">Team feature</a></li>
-              <li><a class="text-muted" href="#">Stuff for developers</a></li>
-              <li><a class="text-muted" href="#">Another one</a></li>
-              <li><a class="text-muted" href="#">Last time</a></li>
+        <% end %>
+      </div>
+      <!-- /#sidebar-wrapper -->
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom">
+          <% if user_signed_in? %>
+            <button class="btn btn-primary" id="menu-toggle">Hide Menu</button>
+          <% else %>
+            <%= link_to 'OdinBook', root_path, class: "navbar-brand" %>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <% if user_signed_in? %>
+                <li class="nav-item active">
+                  <%= link_to 'Home', root_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Account
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <%= link_to 'Settings', edit_user_registration_path, class: "dropdown-item" %>
+                    <div class="dropdown-divider"></div>
+                    <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                  </div>
+                </li>
+              <% else %>
+                <li class="nav-item active">
+                  <%= link_to 'Sign in', new_user_session_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item active">
+                  <%= link_to 'Sign up', new_user_registration_path, class: "nav-link" %>
+                </li>
+              <% end %>
             </ul>
           </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Resource</a></li>
-              <li><a class="text-muted" href="#">Resource name</a></li>
-              <li><a class="text-muted" href="#">Another resource</a></li>
-              <li><a class="text-muted" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Team</a></li>
-              <li><a class="text-muted" href="#">Locations</a></li>
-              <li><a class="text-muted" href="#">Privacy</a></li>
-              <li><a class="text-muted" href="#">Terms</a></li>
-            </ul>
-          </div>
+        </nav>
+        <div class="container">
+          <% flash.each do |message_type, message| %>
+            <!-- <div class="alert alert-<%= message_type %>"><%= message %></div> -->
+            <% if message_type == "notice" %>
+              <% alert_type = "primary" %>
+            <% else %>
+              <% alert_type = message_type %>
+            <% end %>
+            <%= content_tag :div, message, class: "alert alert-#{alert_type}" %>
+          <% end %>
+          <%= yield %>
         </div>
-      </footer>
+      </div>
+      <!-- /#page-content-wrapper -->
     </div>
+    <script>
+      // let toggleBtn = document.querySelector("#menu-toggle");
+      // let wrapper = document.querySelector('#wrapper');
+      
+      document.querySelector("#menu-toggle").addEventListener("click", function(e) {
+        e.preventDefault();
+        if (this.innerHTML == "Hide Menu") {
+          this.innerHTML = "Menu";
+        } else {
+          this.innerHTML = "Hide Menu";
+        }
+      
+        document.querySelector('#wrapper').classList.toggle("toggled");
+      });
+    </script>
   </body>
 </html>

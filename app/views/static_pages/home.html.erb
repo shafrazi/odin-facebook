@@ -1,5 +1,11 @@
-<div>
-  <h5>OdinBook helps you connect and share with the people in your life.</h5>
-  <p><%= image_tag 'share-world' %></p>
-  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
-</div>
+<% unless user_signed_in? %>
+  <div>
+    <h5>OdinBook helps you connect and share with the people in your life.</h5>
+    <p><%= image_tag 'share-world' %></p>
+    <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+  </div>
+<% else %>
+  <div id="status">
+    <%= render 'shared/post_form' %>
+  </div>
+<% end %>
