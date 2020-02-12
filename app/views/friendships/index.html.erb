@@ -1,0 +1,11 @@
+<% @friendships.each do |friendship| %>
+  <div class="people">
+    <ul>
+      <li>
+        <%= friendship.friend.name %>
+        <%= link_to 'Unfriend', friendship_path(friendship), class: "btn-sm btn-danger", id: "unfriend", method: :delete %>
+        <hr>
+      </li>
+    </ul>
+  </div>
+<% end %>

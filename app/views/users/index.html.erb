@@ -1,0 +1,14 @@
+<h1>People</h1>
+<div class="people">
+  <ul>
+    <% @users.each do |user| %>
+      <% if !current_user.is_friend?(user) && current_user != user %>
+        <li>
+          <%= user.name %>
+          <%= link_to 'Add Friend', friendships_path(user_id: user.id), class: "btn-sm btn-success", id: "add-friend", method: :post %>
+        </li>
+        <hr>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

@@ -15,9 +15,10 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
           <div class="sidebar-heading">OdinBook</div>
           <div class="list-group list-group-flush">
-            <%= link_to 'Friends', "#", class: "list-group-item list-group-item-action bg-light" %>
+            <%= link_to 'Friends', friendships_path, class: "list-group-item list-group-item-action bg-light" %>
             <%= link_to 'Photos', '#', class: "list-group-item list-group-item-action bg-light" %>
             <%= link_to 'Posts', user_posts_path, class: "list-group-item list-group-item-action bg-light" %>
+            <%= link_to 'People', users_path, class: "list-group-item list-group-item-action bg-light" %>
           </div>
         <% end %>
       </div>
