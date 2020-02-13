@@ -1,0 +1,33 @@
+<% if @received_friend_requests.any? %>
+  <div>
+    <h3>Friend requests received</h3>
+    <% @received_friend_requests.each do |request| %>
+      <div class="people">
+        <ul>
+          <li>
+            <%= request.requestor.name %>
+            <%= link_to 'Delete', friend_request_path(request), class: "btn-sm btn-danger people-list-btn", method: :delete %>
+            <%= link_to 'Accept', accept_friend_request_path(id: request.id), class: "btn-sm btn-success people-list-btn", method: :post %>
+            <hr>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<% if @sent_friend_requests.any? %>
+  <div>
+    <h3>Friend requests sent</h3>
+    <% @sent_friend_requests.each do |request| %>
+      <div class="people">
+        <ul>
+          <li>
+            <%= request.requestee.name %>
+            <%= link_to 'Delete', friend_request_path(request), class: "btn-sm btn-danger people-list-btn", method: :delete %>
+            <hr>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>

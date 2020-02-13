@@ -10,7 +10,7 @@
   }
 }
 
-#post-delete {
+.people-list-btn {
   float: right;
   margin-right: 10px;
 }
@@ -29,4 +29,11 @@
 #unfriend {
   float: right;
   margin-right: 10px;
+}
+
+.timestamp {
+  color: lightgray;
+  // display: block;
+  // margin-left: 60px;
+  font-size: small;
 }

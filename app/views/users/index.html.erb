@@ -5,7 +5,7 @@
       <% if !current_user.is_friend?(user) && current_user != user %>
         <li>
           <%= user.name %>
-          <%= link_to 'Add Friend', friendships_path(user_id: user.id), class: "btn-sm btn-success", id: "add-friend", method: :post %>
+          <%= link_to 'Add Friend', friend_requests_path(requestee_id: user.id), class: "btn-sm btn-success people-list-btn", method: :post %>
         </li>
         <hr>
       <% end %>
