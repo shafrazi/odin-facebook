@@ -1,0 +1,15 @@
+<div class="modal fade" id="comment-form-modal-<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= form_with(model: @comment, local: true, url: comments_path) do |f| %>
+          <%= f.hidden_field :post_id, value: post.id %>
+          <div class="form-group">
+            <%= f.text_area :content, placeholder: "Add your comment", class: "form-control", autofocus: true %>
+          </div>
+          <%= f.submit "Add comment", class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

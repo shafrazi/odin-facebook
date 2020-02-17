@@ -1,15 +1,32 @@
 <% @posts.each do |post| %>
   <ul class="posts">
     <li>
-      <%= post.content %>
-      <br>
-      <span class="timestamp">
-        Posted <%= time_ago_in_words(post.created_at) %> ago.
-      </span>
-      <span>
-        <%= link_to "Delete", post_path(post), method: :delete, class: "btn-sm btn-danger people-list-btn" if post.user == current_user %>
-      </span>
+      <div class="card">
+        <div class="card-body">
+          <%= post.content %>
+          <br>
+          <span class="timestamp">
+            Posted <%= time_ago_in_words(post.created_at) %> ago.
+          </span>
+          <div id="comment-count">
+            <a data-toggle="collapse" href="#collapse-<%= post.id %>" aria-expanded="false" aria-controls="collapseExample">
+              <%= "#{post.comments.count} comments" %>
+            </a>
+          </div>
+          <p>
+            <div class="collapse comments-div" id="collapse-<%= post.id %>">
+              <%= render partial: "shared/comments", locals: {post: post} %>
+            </div>
+          </p>
+          <hr>
+          <%= link_to "Like", '#',  class: " btn btn-sm btn-primary", role: "button" %>
+          <button type="button" class=" btn btn-sm btn-primary" data-toggle="modal" data-target="#comment-form-modal-<%= post.id %>">
+            Comment
+          </button>
+          <%= link_to "Delete Post", post_path(post), method: :delete, class: "btn btn-sm btn-danger" if post.user == current_user %>
+        </div>
+      </div>
+      <%= render partial: "shared/comment_form", locals: {post: post} %>
     </li>
-    <hr>
   </ul>
 <% end %>
