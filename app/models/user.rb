@@ -4,11 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
   validates :name, presence: true
 
-  has_many :posts
-  has_many :friendships
+  has_many :posts, dependent: :destroy
+  has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   has_many :sent_friend_requests, class_name: "FriendRequest", foreign_key: :requestor_id
   has_many :received_friend_requests, class_name: "FriendRequest", foreign_key: :requestee_id
@@ -30,5 +30,10 @@ class User < ApplicationRecord
 
   def request_count
     self.received_friend_requests.count if self.received_friend_requests.any?
+  end
+
+  def feed
+    friend_ids = "SELECT friend_id FROM friendships WHERE user_id = :user_id"
+    Post.where("user_id IN (#{friend_ids}) OR user_id = :user_id", user_id: self.id)
   end
 end

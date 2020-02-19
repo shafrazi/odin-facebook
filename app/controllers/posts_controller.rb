@@ -19,7 +19,7 @@ class PostsController < ApplicationController
       redirect_to(root_path)
     else
       flash[:danger] = "Invalid post! Please try again."
-      render("static_pages/home")
+      redirect_to root_path
     end
   end
 

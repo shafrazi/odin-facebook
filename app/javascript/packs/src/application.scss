@@ -5,6 +5,8 @@
 }
 
 .posts {
+  margin-left: -40px;
+
   li {
     list-style: none;
   }
@@ -44,4 +46,8 @@
 
 .comments-div {
   font-size: small;
+}
+
+.comment-content {
+  margin-left: 35px;
 }

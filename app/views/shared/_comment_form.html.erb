@@ -1,5 +1,5 @@
-<div class="modal fade" id="comment-form-modal-<%= post.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="comment-form-modal-<%= post.id %>"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <%= form_with(model: @comment, local: true, url: comments_path) do |f| %>

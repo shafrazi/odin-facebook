@@ -1,4 +1,4 @@
-<% @posts.each do |post| %>
+<% @feed_items.each do |post| %>
   <ul class="posts">
     <li>
       <div class="card">
@@ -10,7 +10,9 @@
               Posted <%= time_ago_in_words(post.created_at) %> ago.
             </span>
           </div>
-          <p><%= post.content %></p>
+          <div class="card-text">
+            <p><%= post.content %></p>
+          </div>
           <div id="comment-count">
             <a data-toggle="collapse" href="#collapse-<%= post.id %>" aria-expanded="false" aria-controls="collapseExample">
               <%= "#{post.comments.count} comments" %>

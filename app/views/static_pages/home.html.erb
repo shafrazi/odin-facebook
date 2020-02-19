@@ -8,4 +8,10 @@
   <div id="status">
     <%= render 'shared/post_form' %>
   </div>
+  <br>
+  <% if @feed_items %>
+    <div id="feed">
+      <%= render 'shared/feed' %>
+    </div>
+  <% end %>
 <% end %>
