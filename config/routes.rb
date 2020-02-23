@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources(:friendships)
   resources :friend_requests
   resources :comments
+  resources :likes
 
   post "friend_requests/accept_friend_request", to: "friend_requests#accept_friend_request", as: "accept_friend_request"
 

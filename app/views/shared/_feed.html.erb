@@ -13,18 +13,29 @@
           <div class="card-text">
             <p><%= post.content %></p>
           </div>
-          <div id="comment-count">
-            <a data-toggle="collapse" href="#collapse-<%= post.id %>" aria-expanded="false" aria-controls="collapseExample">
-              <%= "#{post.comments.count} comments" %>
-            </a>
+          <div class= "row">
+            <div id="comment-count" class="col col-md-2 font-small">
+              <a data-toggle="collapse" href="#collapse-comments-<%= post.id %>" aria-expanded="false" aria-controls="collapseExample1">
+                <%= "#{post.comments.count} comments" %>
+              </a>
+            </div>
+            <div class="col col-md-2 font-small">
+              <a data-toggle="modal" href="#likers-modal-<%= post.id %>">
+                <%= "#{post.likes.count} likes" %>
+              </a>
+            </div>
           </div>
           <p>
-            <div class="collapse comments-div" id="collapse-<%= post.id %>">
+            <div class="collapse comments-div" id="collapse-comments-<%= post.id %>">
               <%= render partial: "shared/comments", locals: {post: post} %>
             </div>
           </p>
           <hr>
-          <%= link_to "Like", '#',  class: " btn btn-sm btn-primary", role: "button" %>
+          <% if current_user.liked?(post) %>
+            <%= link_to "Unlike", like_path(Like.find_by(user_id: current_user.id, post_id: post.id)),  method: :delete, class: " btn btn-sm btn-danger", role: "button" %>
+          <% else %>
+            <%= link_to "Like", likes_path(post_id: post.id),  method: :post, class: " btn btn-sm btn-primary", role: "button" %>
+          <% end %>
           <button type="button" class=" btn btn-sm btn-primary" data-toggle="modal" data-target="#comment-form-modal-<%= post.id %>">
             Comment
           </button>
@@ -32,6 +43,7 @@
         </div>
       </div>
       <%= render partial: "shared/comment_form", locals: {post: post} %>
+      <%= render partial: "shared/likers", locals: {post: post} %>
     </li>
   </ul>
 <% end %>

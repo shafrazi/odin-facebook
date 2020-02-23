@@ -1,0 +1,17 @@
+<div class="modal fade" id="likers-modal-<%= post.id %>"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ul>
+          <% post.likes.each do |like| %>
+            <li>
+              <%= gravatar_for(like.user, "30") %>
+              <%= link_to like.user.name, user_path(like.user) %>
+              <hr>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
+  has_many :likes, dependent: :destroy
+
   has_many :sent_friend_requests, class_name: "FriendRequest", foreign_key: :requestor_id
   has_many :received_friend_requests, class_name: "FriendRequest", foreign_key: :requestee_id
 
@@ -35,5 +37,9 @@ class User < ApplicationRecord
   def feed
     friend_ids = "SELECT friend_id FROM friendships WHERE user_id = :user_id"
     Post.where("user_id IN (#{friend_ids}) OR user_id = :user_id", user_id: self.id)
+  end
+
+  def liked?(post)
+    Like.find_by(post_id: post.id, user_id: self.id)
   end
 end
