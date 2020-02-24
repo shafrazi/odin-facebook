@@ -1,0 +1,7 @@
+document.querySelector("#like-unlike-<%= @post.id %>").innerHTML = "<%= escape_javascript(render partial: "shared/like_post", locals: {post: @post})%>";
+document.querySelector("#like-count-<%= @post.id %>").innerHTML = "<%= "#{@post.likes.count} likes" %>";
+document.querySelector("#likers-<%= @post.id %>").innerHTML = "<%= escape_javascript(render partial: "shared/likers", locals: {post: @post})%>";
+
+<% if @post.likes.count < 1 %>
+  document.querySelector("#like-count-<%= @post.id %>").setAttribute("data-toggle", "");
+<% end %>

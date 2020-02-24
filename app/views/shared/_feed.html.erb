@@ -20,7 +20,7 @@
               </a>
             </div>
             <div class="col col-md-2 font-small">
-              <a data-toggle="modal" href="#likers-modal-<%= post.id %>">
+              <a id="like-count-<%= post.id %>" data-toggle="<%= "modal" if post.likes.any? %>" href="#likers-modal-<%= post.id %>">
                 <%= "#{post.likes.count} likes" %>
               </a>
             </div>
@@ -31,11 +31,13 @@
             </div>
           </p>
           <hr>
-          <% if current_user.liked?(post) %>
-            <%= link_to "Unlike", like_path(Like.find_by(user_id: current_user.id, post_id: post.id)),  method: :delete, class: " btn btn-sm btn-danger", role: "button" %>
-          <% else %>
-            <%= link_to "Like", likes_path(post_id: post.id),  method: :post, class: " btn btn-sm btn-primary", role: "button" %>
-          <% end %>
+          <span id="like-unlike-<%= post.id %>">
+            <% if current_user.liked?(post) %>
+              <%= render partial: "shared/unlike_post", locals: {post: post} %>
+            <% else %>
+              <%= render partial: "shared/like_post", locals: {post: post} %>
+            <% end %>
+          </span>
           <button type="button" class=" btn btn-sm btn-primary" data-toggle="modal" data-target="#comment-form-modal-<%= post.id %>">
             Comment
           </button>
@@ -43,7 +45,9 @@
         </div>
       </div>
       <%= render partial: "shared/comment_form", locals: {post: post} %>
-      <%= render partial: "shared/likers", locals: {post: post} %>
+      <div id="likers-<%= post.id %>">
+        <%= render partial: "shared/likers", locals: {post: post} %>
+      </div>
     </li>
   </ul>
 <% end %>
