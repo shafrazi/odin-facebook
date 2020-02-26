@@ -4,4 +4,5 @@ document.querySelector("#likers-<%= @post.id %>").innerHTML = "<%= escape_javasc
 
 <% if @post.likes.count < 1 %>
   document.querySelector("#like-count-<%= @post.id %>").setAttribute("data-toggle", "");
+  document.querySelector("#like-count-<%= @post.id %>").setAttribute("href", "#");
 <% end %>

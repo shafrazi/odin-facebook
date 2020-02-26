@@ -30,6 +30,10 @@ class User < ApplicationRecord
     self.friends.include?(other_user)
   end
 
+  def add_friend(other_user)
+    self.friendships.create(friend_id: other_user.id)
+  end
+
   def request_count
     self.received_friend_requests.count if self.received_friend_requests.any?
   end
