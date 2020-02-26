@@ -13,6 +13,9 @@
           <div class="card-text">
             <p><%= post.content %></p>
           </div>
+          <div>
+            <%= image_tag url_for post.photo if post.photo.attached? %>
+          </div>
           <div class= "row">
             <div id="comment-count" class="col col-md-2 font-small">
               <a data-toggle="collapse" href="#collapse-comments-<%= post.id %>" aria-expanded="false" aria-controls="collapseExample1">

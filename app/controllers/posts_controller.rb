@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  require "mini_magick"
+
   def index
     @posts = Post.all
   end
@@ -13,6 +15,11 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.build(post_params)
+    if params[:post][:photo]
+      photo = params[:post][:photo]
+      mini_image = MiniMagick::Image.new(photo.tempfile.path)
+      mini_image.resize "300x300"
+    end
 
     if @post.save
       flash[:success] = "Post created!"
@@ -32,6 +39,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :photo)
   end
 end
