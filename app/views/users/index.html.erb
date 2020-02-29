@@ -6,10 +6,31 @@
         <li>
           <%= gravatar_for(user, 30) %>
           <%= user.name %>
-          <%= link_to 'Add Friend', friend_requests_path(requestee_id: user.id), class: "btn-sm btn-success people-list-btn", method: :post %>
+          <% if current_user.friend_request_sent?(user) %>
+            <%= link_to "Friend request sent", friend_request_path(FriendRequest.find_by(requestor_id: current_user.id, requestee_id: user.id).id), method: :delete, class: "btn btn-sm btn-warning people-list-btn", onmouseover: "changeBtnText(this)", onmouseleave: "changeBtnText(this)" %>
+          <% elsif current_user.friend_request_received?(user) %>
+            <button class="btn btn-sm btn-warning people-list-btn dropdown-toggle" type="button" id="request-respond-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Respond to friend request</button>
+            <div class="dropdown-menu" aria-labelledby="request-respond-dropdown">
+              <%= link_to  "Accept", accept_friend_request_path(id: FriendRequest.find_by(requestor_id: user.id, requestee_id: current_user.id).id), class: "dropdown-item", method: :post %>
+              <%= link_to 'Decline', friend_request_path(FriendRequest.find_by(requestor_id: user.id, requestee_id: current_user.id)), class: "dropdown-item", method: :delete %>
+            </div>
+          <% else %>
+            <%= link_to 'Add Friend', friend_requests_path(requestee_id: user.id), class: "btn btn-sm btn-success people-list-btn", method: :post %>
+          <% end %>
         </li>
         <hr>
       <% end %>
     <% end %>
   </ul>
 </div>
+<script>
+  function changeBtnText(button) {
+    if (button.innerHTML == "Friend request sent") {
+      button.innerHTML = "Delete request";
+      button.className = "btn btn-sm btn-danger people-list-btn";
+    } else {
+      button.innerHTML = "Friend request sent";
+      button.className = "btn btn-sm btn-warning people-list-btn";
+    }
+  }
+</script>

@@ -56,4 +56,12 @@ class User < ApplicationRecord
     end
     photos
   end
+
+  def friend_request_sent?(other_user)
+    FriendRequest.find_by(requestor_id: self.id, requestee_id: other_user.id)
+  end
+
+  def friend_request_received?(other_user)
+    FriendRequest.find_by(requestor_id: other_user.id, requestee_id: self.id)
+  end
 end

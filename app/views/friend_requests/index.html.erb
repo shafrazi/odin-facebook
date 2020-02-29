@@ -5,6 +5,7 @@
       <div class="people">
         <ul>
           <li>
+            <%= gravatar_for(request.requestor, 30) %>
             <%= request.requestor.name %>
             <%= link_to 'Delete', friend_request_path(request), class: "btn-sm btn-danger people-list-btn", method: :delete %>
             <%= link_to 'Accept', accept_friend_request_path(id: request.id), class: "btn-sm btn-success people-list-btn", method: :post %>
@@ -22,6 +23,7 @@
       <div class="people">
         <ul>
           <li>
+            <%= gravatar_for(request.requestee, 30) %>
             <%= request.requestee.name %>
             <%= link_to 'Delete', friend_request_path(request), class: "btn-sm btn-danger people-list-btn", method: :delete %>
             <hr>

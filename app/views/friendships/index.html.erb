@@ -2,6 +2,7 @@
   <div class="people">
     <ul>
       <li>
+        <%= gravatar_for(friendship.friend, 30) %>
         <%= friendship.friend.name %>
         <%= link_to 'Unfriend', friendship_path(friendship), class: "btn-sm btn-danger people-list-btn", method: :delete %>
         <hr>
