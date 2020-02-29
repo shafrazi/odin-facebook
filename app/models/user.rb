@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :sent_friend_requests, class_name: "FriendRequest", foreign_key: :requestor_id
   has_many :received_friend_requests, class_name: "FriendRequest", foreign_key: :requestee_id
 
+  has_one_attached :avatar
+
   # has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id"
   # has_many :inverse_friends, through: :inverse_friendships, source: :user
 
@@ -40,7 +42,7 @@ class User < ApplicationRecord
 
   def feed
     friend_ids = "SELECT friend_id FROM friendships WHERE user_id = :user_id"
-    Post.where("user_id IN (#{friend_ids}) OR user_id = :user_id", user_id: self.id)
+    Post.where("user_id IN (#{friend_ids}) OR user_id = :user_id", user_id: self.id).order(created_at: :desc)
   end
 
   def liked?(post)
