@@ -1,0 +1,7 @@
+<% if @photos.any? %>
+  <% @photos.each do |photo| %>
+    <%= image_tag url_for photo  %>
+  <% end %>
+<% else %>
+  <p>No photos to show.</p>
+<% end %>

@@ -4,6 +4,7 @@
     <% @users.each do |user| %>
       <% if !current_user.is_friend?(user) && current_user != user %>
         <li>
+          <%= gravatar_for(user, 30) %>
           <%= user.name %>
           <%= link_to 'Add Friend', friend_requests_path(requestee_id: user.id), class: "btn-sm btn-success people-list-btn", method: :post %>
         </li>

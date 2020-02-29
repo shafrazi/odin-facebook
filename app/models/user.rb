@@ -46,4 +46,14 @@ class User < ApplicationRecord
   def liked?(post)
     Like.find_by(post_id: post.id, user_id: self.id)
   end
+
+  def photos
+    photos = []
+    self.posts.each do |post|
+      if post.photo.attached?
+        photos << post.photo
+      end
+    end
+    photos
+  end
 end

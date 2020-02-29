@@ -36,6 +36,10 @@ class PostsController < ApplicationController
     redirect_to(request.referrer || root_path)
   end
 
+  def photos
+    @photos = current_user.photos
+  end
+
   private
 
   def post_params

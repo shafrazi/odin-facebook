@@ -12,5 +12,6 @@ Rails.application.routes.draw do
 
   post "friend_requests/accept_friend_request", to: "friend_requests#accept_friend_request", as: "accept_friend_request"
 
-  get("/user_posts", to: "posts#user_posts", as: "user_posts")
+  get "/user_posts", to: "posts#user_posts", as: "user_posts"
+  get "/photos", to: "posts#photos", as: "photos"
 end
