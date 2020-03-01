@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_create :send_welcome_mail
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
@@ -65,5 +66,11 @@ class User < ApplicationRecord
 
   def friend_request_received?(other_user)
     FriendRequest.find_by(requestor_id: other_user.id, requestee_id: self.id)
+  end
+
+  private
+
+  def send_welcome_mail
+    UserMailer.welcome(self).deliver_now
   end
 end
